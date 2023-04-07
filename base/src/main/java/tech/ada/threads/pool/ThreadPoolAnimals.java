@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 
 public class ThreadPoolAnimals {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ExecutorService pool = Executors.newFixedThreadPool(4);
 
         Animal[] animals = {
@@ -21,6 +21,8 @@ public class ThreadPoolAnimals {
         Arrays.stream(animals).forEach(animal -> {
             pool.execute(animal::fazerBarulho);
         });
+
+        Thread.sleep(90000);
 
         pool.shutdown();
     }
