@@ -12,10 +12,26 @@ public class StreamServiceTest {
 
     StreamsService service = new StreamsService();
 
+    @Deprecated
+    public static void main(String[] args) {
+        List<Integer> entry = List.of(1,2,3,4,5); // entrada
+        StreamsService service = new StreamsService(); // service
+        Optional<Integer> firstOdd = service.firstOdd(entry); // resultado
+        System.out.println( firstOdd.get() );
+    }
+
+    // criar Usuario nome, idade, saldo
+    // campos obrigatorios
+    // dado valido data-idade
+    // dado valido saldo
+    //[18-65]
+
     @Test
     public void firstOdd() {
         List<Integer> entry = List.of(1,2,3,4,5);
         Optional<Integer> firstOdd = service.firstOdd(entry);
+        assertNotNull(firstOdd);
+        assertFalse(firstOdd.isEmpty());
         assertEquals(1, firstOdd.get());
     }
 
