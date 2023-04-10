@@ -22,7 +22,9 @@ public class ThreadPoolAnimals {
             pool.execute(animal::fazerBarulho);
         });
 
-        Thread.sleep(90000);
+        System.out.println("waiting 900s=15min");
+        Thread.sleep(900000);
+        System.out.println("done 900s=15min");
 
         pool.shutdown();
     }
