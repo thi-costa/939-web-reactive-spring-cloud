@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,4 +43,9 @@ public class UserService {
     public Mono<User> buscarPorId(String id) {
         return repository.findById(id);
     }
+
+    public Flux<User> buscarPorUsernames(String username1, String username2) {
+        return repository.findByUsernameIn(List.of(username1, username2));
+    }
+
 }

@@ -2,13 +2,10 @@
 POST http://localhost:8080/users
 Content-Type: application/json
 
-< ./post-fred-mercury.json
+< ./post-michael-jordan.json
 
 ### listar
 GET http://localhost:8080/users
-
-### listar
-GET http://localhost:8080/users/test
 
 ### atualizar
 PUT http://localhost:8080/users/64322c13fad4110e7447ca6f

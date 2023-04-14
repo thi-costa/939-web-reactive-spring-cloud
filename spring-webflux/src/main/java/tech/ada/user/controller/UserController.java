@@ -35,7 +35,7 @@ public class UserController {
     public Mono<ResponseEntity<Flux<User>>> listar() {
         return service.listar()
             .collectList()
-            .map(users -> ResponseEntity.ok().body(Flux.fromIterable(users)))
+            .map(users -> ResponseEntity.ok().body(Flux.fromIterable(users)) )
             .switchIfEmpty(Mono.just(ResponseEntity.noContent().build()));
     }
 
@@ -44,6 +44,18 @@ public class UserController {
         return service.buscarPorId(id)
             .map(atual -> ResponseEntity.ok().body(atual))
             .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
+
+    @GetMapping("/usernames")
+    public Flux<ResponseEntity<User>> getById(@RequestParam("user1") String user1, @RequestParam("user2") String user2) {
+        return service.buscarPorUsernames(user1, user2)
+            .map(atual -> ResponseEntity.ok().body(atual))
+            .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
+
+    @GetMapping("/test")
+    public Flux<ResponseEntity<User>> test() {
+        return Flux.just(ResponseEntity.ok().build());
     }
 
     @PutMapping("/{id}")
