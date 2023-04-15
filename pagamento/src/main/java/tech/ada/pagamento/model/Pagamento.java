@@ -13,4 +13,8 @@ public class Pagamento {
     private String recebedor;
     private Double valor;
 
+    public String getParamUsuarios() {
+        return this.pagador + "," + this.recebedor;
+    }
+
 }

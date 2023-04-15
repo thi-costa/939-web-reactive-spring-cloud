@@ -2,4 +2,4 @@
 POST http://localhost:8090/pagamentos
 Content-Type: application/json
 
-< ./bob-50-alice.json
+< ./fred-50-leo.json
