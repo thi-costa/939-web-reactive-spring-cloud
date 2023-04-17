@@ -1,5 +1,7 @@
 package tech.ada.user.controller;
 
+import org.springframework.http.MediaType;
+import tech.ada.pagamento.model.Test;
 import tech.ada.user.exception.UserNotFoundException;
 import tech.ada.user.model.User;
 import tech.ada.user.service.UserService;
@@ -47,15 +49,11 @@ public class UserController {
     }
 
     @GetMapping("/usernames")
-    public Flux<ResponseEntity<User>> getById(@RequestParam("user1") String user1, @RequestParam("user2") String user2) {
-        return service.buscarPorUsernames(user1, user2)
-            .map(atual -> ResponseEntity.ok().body(atual))
+    public Mono<ResponseEntity<Flux<User>>> buscarPorUsername(@RequestParam("users") String[] users) {
+        return service.buscarPorUsernames(users)
+            .collectList()
+            .map(atual -> ResponseEntity.ok().body(Flux.fromIterable(atual)))
             .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
-    }
-
-    @GetMapping("/test")
-    public Flux<ResponseEntity<User>> test() {
-        return Flux.just(ResponseEntity.ok().build());
     }
 
     @PutMapping("/{id}")
@@ -65,21 +63,20 @@ public class UserController {
             .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
-    @DeleteMapping("/{id}") // TODO notFound nao funciona quando ID inexistente
+    @PostMapping(value = "/pagamentos", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<Comprovante> pagamento(@RequestBody Comprovante comprovante) {
+        comprovante.setAck_usuario(true);
+        /// pegar os objetos, mudar os dados e salvar
+        // pegar o valor e diminuir de pagador e aumentar do recebedor e salvar
+        return Mono.just(comprovante).log();
+    }
+
+    @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> remover(@PathVariable String id) {
         return service.remover(id)
             .then(Mono.just(ResponseEntity.ok().<Void>build()))
-            .onErrorResume(e -> {
-                switch (e) {
-                    case UserNotFoundException u -> {
-                        return Mono.just(ResponseEntity.notFound().build());
-                    }
-                    default -> throw new IllegalStateException("unexpected value: " + e);
-                }
-            });
-        // onErrorResume apenas exemplo > Pattern Matching for instanceof and Switch in Java
-        // prefiram simplificar controller e centralizar tratar fluxos em exception handler
-        // FIXME consertem ao excluir um ID inexistente que retorne not found
+            .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
+            .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
     }
 
 }

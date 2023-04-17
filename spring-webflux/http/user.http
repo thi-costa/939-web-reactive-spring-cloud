@@ -19,3 +19,5 @@ Content-Type: application/json
 ### remover
 DELETE http://localhost:8080/users/64322c04fad4110e7447ca6e
 
+### listar
+GET http://localhost:8080/users/usernames?users=fredm,leos
