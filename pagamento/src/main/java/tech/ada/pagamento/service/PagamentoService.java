@@ -1,13 +1,12 @@
 package tech.ada.pagamento.service;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import tech.ada.pagamento.model.Comprovante;
-import tech.ada.pagamento.model.Pagamento;
-import tech.ada.pagamento.model.Transacao;
-import tech.ada.pagamento.model.Usuario;
+import tech.ada.pagamento.model.*;
 import tech.ada.pagamento.repository.TransacaoRepository;
 
 @Service
@@ -56,8 +55,12 @@ public class PagamentoService {
                         .path("/users/pagamentos")
                         .build())
                 .bodyValue(cmp)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve().bodyToMono(Comprovante.class);
 
-        return monoComprovante;
+        monoComprovante.log();
+
+        return Mono.from(monoComprovante);
     }
+
 }
