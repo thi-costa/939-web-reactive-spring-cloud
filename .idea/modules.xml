@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/939-web-reactive-spring-cloud.iml" filepath="$PROJECT_DIR$/.idea/939-web-reactive-spring-cloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-webflux/ada-966-webflux.iml" filepath="$PROJECT_DIR$/spring-webflux/ada-966-webflux.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mercado/mercado.iml" filepath="$PROJECT_DIR$/mercado/mercado.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pagamento/pagamento.iml" filepath="$PROJECT_DIR$/pagamento/pagamento.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-mvc/spring-mvc.iml" filepath="$PROJECT_DIR$/spring-mvc/spring-mvc.iml" />
     </modules>
   </component>
 </project>
